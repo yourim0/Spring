@@ -8,4 +8,23 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<context:component-scan base-package="com.zerock.sample">
 	</context:component-scan>
+	
+	<!-- HikariConfig : db정보 세팅 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig"> <!-- 해당 변수명과 클래스이름 -->
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@Localhost:1521:orcl"></property>
+		<property name="username" value="scott"></property>
+		<property name="password" value="tiger"></property>
+	</bean>
+	
+	
+	<!-- HikariDataSource : db 연결  -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close"> <!-- close:사용완료 후 자동종료 -->
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name ="dataSource" ref="dataSource"></property> <!-- id로 정의되어있는 hikari datasource가 setMethod가 실행된다. -->
+	</bean>
+	
 </beans>
