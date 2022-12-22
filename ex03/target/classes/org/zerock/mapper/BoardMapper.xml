@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  <!-- mybatis에 대한 이용이라는 선언 -->
+<mapper namespace="org.zerock.mapper.BoardMapper"> <!-- 패키지명.인터페이스명 / 연결해주는 유일한 근거 -->
+	<select id="getList" resultType="org.zerock.domain.BoardVO"> <!-- boardVO타입으로 배열형식으로 데이터를 쌓는다. 컬렉션 구조 에서 list 배열형식으로 -->
+	<![CDATA[
+	select * from tbl_board where bno > 0
+	]]>
+	</select> <!-- xml에서 사용하는 select 구문의 id 속성값이 boardmapper 인터페이스 메소드의 이름이다 -->
+	
+	<insert id="insert">
+		insert into tbl_board (bno,title,content,writer)
+		values (seq_board.nextval, #{title}, #{content}, #{writer}) <!-- vo에 정의되어있는 gettitle()메소드가 호출된다.#{}형식 -->
+	</insert>
+	
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="long"><!-- 값을 저장하는 변수역할 알고싶은 값 -->
+			select seq_board.nextval from dual <!-- 시퀀스객체 미리실행해서 가져옴 -->
+		</selectKey>
+		
+		insert into tbl_board(bno,title,content,writer) 
+		values(#{bno}, #{title}, #{content}, #{writer})<!-- 시퀀스를 받아서 vo객체로 이용, 다이렉트로 insert 두가지방법????????? -->
+	</insert>
+	
+	<!-- 이거는 mvcBoarddto의 selectview와 같다 -->
+	<select id="read" resultType="org.zerock.domain.BoardVO"><!-- vo 클래스에 담아서 받아옴 -->
+		select * from tbl_board where bno = #{bno}
+	</select>
+	
+	<delete id="delete">
+		delete from tbl_board where bno = #{bno}
+	</delete>
+	
+	<update id="update">
+		update tbl_board
+		set title = #{title},
+		content = #{content},
+		writer = #{writer},
+		updateDate = sysdate
+		where bno = #{bno}		
+	</update>
+</mapper> 
+
+
+
