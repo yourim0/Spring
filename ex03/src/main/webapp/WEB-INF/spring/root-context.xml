@@ -9,10 +9,10 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
-	<context:component-scan base-package="org.zerock.Controller">
+	<context:component-scan base-package="org.zerock.controller">
 	</context:component-scan>
 
-	<context:component-scan base-package="org.zerock.Service">
+	<context:component-scan base-package="org.zerock.service">
 	</context:component-scan>
 	
 	<!-- HikariConfig : db정보 세팅 -->
