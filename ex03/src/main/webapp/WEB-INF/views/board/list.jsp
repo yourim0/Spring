@@ -63,6 +63,11 @@
                                 	</ul>
                                 </div>
                                 
+                                <!-- 원래 a태그 동작 막음 -->
+                                <form id='actionForm' action="/board/list" method="get">
+                                	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+                                	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+                                </form>
                                 
                                  <!-- Modal -->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -105,6 +110,7 @@ $(document).ready(function(){
 	checkModal(result);
 	
 	history.replaceState({},null,null);
+	
 	function checkModal(result){
 		if(result === '' || history.state){
 			return;
@@ -118,6 +124,20 @@ $(document).ready(function(){
 	$("#regBtn").on("click", function(){
 		self.location = "/board/register";
 	});
+	
+	var actionForm = $("#actionForm");
+	$(".paginate_button a").on("click",function(e){
+		e.preventDefault();
+		console.log('click');
+		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+		actionForm.submit();
+	})
+	
 	});
+
+	
+	
+	
+
 </script>
     
