@@ -1,11 +1,14 @@
 package com.zerock.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 import org.zerock.mapper.BoardMapper;
 
 import lombok.Setter;
@@ -62,17 +65,30 @@ public class BoardMapperTests {
 //		
 //	}
 
+//	@Test
+//	public void testUpdate() {
+//		BoardVO board = new BoardVO(); //pjpo 
+//		board.setBno(4L);
+//		board.setTitle("수정된 제목");
+//		board.setContent("수정된 내용");
+//		board.setWriter("user00");
+//		
+//		int count = mapper.update(board);
+//		log.info("UPDATE COUNT : "+ count);
+//		
+//	}
+	
 	@Test
-	public void testUpdate() {
-		BoardVO board = new BoardVO(); //pjpo 
-		board.setBno(4L);
-		board.setTitle("수정된 제목");
-		board.setContent("수정된 내용");
-		board.setWriter("user00");
+	public void testPaging() {
+		Criteria cri = new Criteria();
 		
-		int count = mapper.update(board);
-		log.info("UPDATE COUNT : "+ count);
+		//10개씩 3페이지
+		cri.setPageNum(1);
+		cri.setAmount(10);
 		
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		
+		list.forEach(board -> log.info(board));
 	}
 
 }

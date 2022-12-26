@@ -17,7 +17,7 @@
 	
 	<!-- HikariConfig : db정보 세팅 -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig"> <!-- 해당 변수명과 클래스이름 -->
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@Localhost:1521:orcl"></property>
 		<property name="username" value="scott"></property>
 		<property name="password" value="tiger"></property>
