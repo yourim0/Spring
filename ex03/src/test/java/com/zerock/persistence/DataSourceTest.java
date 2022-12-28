@@ -22,7 +22,7 @@ import lombok.extern.log4j.Log4j;
 public class DataSourceTest {
 	//스프링 컨테이너에서 가져올 때 자동주입
 	@Setter(onMethod_ = @Autowired)
-	private DataSource dataSource;
+	private DataSource dataSource; //커넥션
 	
 	@Setter(onMethod_ = @Autowired)
 	private SqlSessionFactory sqlSessionFactory;//root-context의 id값

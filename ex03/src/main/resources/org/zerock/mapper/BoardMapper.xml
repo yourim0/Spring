@@ -42,12 +42,67 @@
 		where bno = #{bno}		
 	</update>
 	
+
+	
 	<!-- getListWithPaging -->
-	<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
+	<!-- <select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
 	<![CDATA[
-	select bno,title,content,writer,regdate,updatedate from(select /*+INDEX_DESC(tbl_board pk_board) */ rownum rn, bno, title,content,writer,regdate,updatedate from tbl_board where rownum <= #{pageNum} * #{amount}) where rn > (#{pageNum} -1) * #{amount}
+	select bno,title,content,writer,regdate,updatedate from(
+	select /*+INDEX_DESC(tbl_board pk_board) */
+	 rownum rn, bno, title,content,writer,regdate,updatedate
+	  from tbl_board where rownum <= #{pageNum} * #{amount}) where rn > (#{pageNum} -1) * #{amount}
 	]]>
-	</select>
+	</select>-->
+	
+	<!-- getListWithPaging -->
+	
+	<!-- sql 태그 : sql일부를 별도 보관해 필요한 경우 include 가능 -->
+	<sql id="criteria">
+		<trim prefix="(" suffix= ") AND " prefixOverrides="OR"> <!-- prefix:실행될 쿼리의 <trim> 문 안에 쿼리 가장 앞에 붙여준다/ suffix:가장뒤에 붙혀줌 / prefixOverrides:OR로 시작 될 경우 제거하고 시작 -->
+			<foreach item='type' collection="typeArr"><!-- 전달받은 인자를 속성값으로 삽입. mybatis 는 get,set메서드 활용 criteria클래스의 getTypeArr() 결과인 문자열의 배열이 foreach의 대상 -->
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+						title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+						content like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'W'.toString()">
+						writer like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
+		<![CDATA[
+		select bno,title,content,writer,regdate,updatedate from(
+		select /*+INDEX_DESC(tbl_board pk_board) */
+		 rownum rn, bno, title,content,writer,regdate,updatedate
+		  from tbl_board where
+		]]>
+		
+		<include refid="criteria"></include> <!-- sql은 id라는 속성으로 사용 -->
+			
+		<![CDATA[
+		rownum <= #{pageNum} * #{amount})
+		where rn > (#{pageNum} -1) * #{amount}
+		]]>
+		</select>
+		
+		<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_board where 
+		<include refid="criteria"></include>
+		bno > 0
+		</select>
+		
+
+
+	
+
 	
 </mapper> 
 

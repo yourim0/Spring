@@ -26,6 +26,11 @@ public interface BoardMapper { //인터페이스의 추상메서드 이름과 xm
 	
 	public int update(BoardVO board);
 	
+	//전체 데이터 수 처리
+	public int getTotalCount(Criteria cri);
+	
+	
+	
 	
 	
 
