@@ -41,12 +41,12 @@ public class ReplyMapperTests {
 //	}
 	
 	//--------------select------------------
-//	@Test
-//	public void testRead() {
-//		Long targetRno = 5L;
-//		ReplyVO vo = mapper.read(targetRno);
-//		log.info(vo);
-//	}
+	@Test
+	public void testRead() {
+		Long targetRno = 5L;
+		ReplyVO vo = mapper.read(targetRno);
+		log.info(vo);
+	}
 	
 	
 	//---------------delete--------------------
@@ -74,13 +74,13 @@ public class ReplyMapperTests {
 //	}
 	
 	//---------------getlistwithpaging(특정)--------------------
-	@Test
-	public void testList() {
-		Criteria cri = new Criteria();
-		
-		List<ReplyVO> replies = mapper.getListWithPaging(cri, bnoArr[0]);
-		replies.forEach(reply -> log.info(reply));
-	}
+//	@Test
+//	public void testList() {
+//		Criteria cri = new Criteria();
+//		
+//		List<ReplyVO> replies = mapper.getListWithPaging(cri, bnoArr[0]);
+//		replies.forEach(reply -> log.info(reply));
+//	}
 	
 	
 	
