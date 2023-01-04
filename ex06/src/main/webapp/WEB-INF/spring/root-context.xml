@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	
+	<context:component-scan base-package="org.zerock.controller">
+	</context:component-scan>
+
+	<context:component-scan base-package="org.zerock.service">
+	</context:component-scan>
+	
+		<context:component-scan base-package="org.zerock.aop"> <!-- 스프링컨테이너 빈 -->
+	</context:component-scan>
+	
+	<!-- HikariConfig : db정보 세팅 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig"> <!-- 해당 변수명과 클래스이름 -->
+		<!-- <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property> -->
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<!-- <property name="jdbcUrl" value="jdbc:oracle:thin:@Localhost:1521:orcl"></property> -->
+		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:orcl"></property>
+		<property name="username" value="scott"></property>
+		<property name="password" value="tiger"></property>
+	</bean>
+	
+	<!-- HikariDataSource : db 연결  -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close"> <!-- close:사용완료 후 자동종료 -->
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+	
+	<!-- sqlsessionfactory 내부적으로 sqlsession 만들어냄. sqlsession은  connection 생성 또는 sql 전달해 결과를 리턴받는다   -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> <!-- Mybatis spring 라이브러리 클래스 sqlsessionfactorybean을 이용해  SQLsessionfactory를 등록 -->
+		<property name ="dataSource" ref="dataSource"></property> <!-- id로 정의되어있는 hikari datasource가 setMethod가 실행된다. -->
+	</bean>
+	
+	<mybatis-spring:scan base-package="org.zerock.mapper" />
+</beans>
