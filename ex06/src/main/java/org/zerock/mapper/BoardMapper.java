@@ -2,6 +2,7 @@ package org.zerock.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
 
@@ -28,6 +29,9 @@ public interface BoardMapper { //인터페이스의 추상메서드 이름과 xm
 	
 	//전체 데이터 수 처리
 	public int getTotalCount(Criteria cri);
+	
+	//replyCnt업데이트
+	public void updateReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
 	
 	
 	
