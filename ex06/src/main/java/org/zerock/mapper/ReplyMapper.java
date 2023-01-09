@@ -19,5 +19,8 @@ public interface ReplyMapper {
 	public List<ReplyVO> getListWithPaging( // 원글 번호, 페이징 위한 cri 정보
 			@Param("cri") Criteria cri, 
 			@Param("bno") Long bno
-		); 
+		);
+	
+	public int getCountByBno(Long bno);
+	
 	}

@@ -47,6 +47,11 @@
 		<property name ="dataSource" ref="dataSource"></property> <!-- id로 정의되어있는 hikari datasource가 setMethod가 실행된다. -->
 	</bean>
 	
+	<bean id="transactionManager"
+	class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
 	<tx:annotation-driven/>
 	<mybatis-spring:scan base-package="org.zerock.mapper" />
 </beans>

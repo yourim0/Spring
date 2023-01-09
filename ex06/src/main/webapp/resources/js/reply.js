@@ -31,7 +31,8 @@ var replyService = (function(){ //즉시실행함수
 		$.getJSON("/replies/pages/" + bno + "/" + page + ".json", 
 				function(data){
 					if(callback){
-						callback(data);
+						//callback(data);
+						callback(data.resplyCnt, data.list);
 					}
 		}).fail(function(xhr,status,err){
 			if(error){
